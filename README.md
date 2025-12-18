@@ -32,10 +32,9 @@ writer = ApplicantExcelWriter("applicants.xlsx")
 
 # JSON 데이터
 resume_data = {
-    "applicant_number": "2024-HR-0001",
     "applicant_name": "홍길동",
     "application_date": "2024-12-19",
-    "affiliation": "",
+    "affiliation": "서울대학교",
     "application_field": "소프트웨어 개발",
     "basic_info": {
         "birth_year": "1990",
@@ -91,7 +90,6 @@ python main.py
 
 ```json
 {
-  "applicant_number": "2024-HR-0001",
   "applicant_name": "김정호",
   "application_date": "2024-12-19",
   "affiliation": "한국증권",
@@ -115,22 +113,39 @@ python main.py
 }
 ```
 
+### 필수 필드 (Mandatory Fields)
+- `applicant_name` (지원자명)
+- `application_date` (지원일)
+- `affiliation` (소속)
+- `application_field` (지원분야/공고)
+
+**참고**: `applicant_number` (지원자 번호)는 자동으로 순차적으로 생성됩니다 (1, 2, 3, ...).
+
+### 선택 필드 (Optional Fields)
+- `basic_info` (기본정보)
+- `work_experience` (경력사항)
+
 ## 주요 기능
 
-### 1. 자동 검증
-- 필수 필드 확인
+### 1. 지원자 번호 자동 생성
+- `applicant_number`는 JSON에 포함하지 않아도 됩니다
+- Excel의 행 번호에 따라 자동으로 순차 생성 (1, 2, 3, ...)
+- 첫 번째 지원자는 1번, 두 번째는 2번...
+
+### 2. 자동 검증
+- 필수 필드 확인 (지원자명, 지원일, 소속, 지원분야/공고)
 - 날짜 형식 검증 (YYYY-MM-DD, YYYY-MM)
 - 데이터 타입 확인
 - 논리적 오류 감지 (예: 입사일 > 퇴사일)
 
-### 2. 데이터 정제
+### 3. 데이터 정제
 - 공백 제거
 - 날짜 형식 정규화
 - 성별 표준화 (남/여/기타)
 - 경력 최신순 정렬
 - 최대 5개 경력만 유지
 
-### 3. Excel 자동 추가
+### 4. Excel 자동 추가
 - 기존 파일에 새 행 추가
 - 자동 열 매핑
 - 템플릿이 없으면 자동 생성

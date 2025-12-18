@@ -140,6 +140,11 @@ class ApplicantExcelWriter:
         # Find next empty row
         next_row = ws.max_row + 1
         
+        # Auto-generate applicant_number if not provided
+        if not json_data.get('applicant_number'):
+            # Sequential number based on row number (row 2 = applicant 1)
+            json_data['applicant_number'] = str(next_row - 1)
+        
         # Write data to appropriate cells
         for json_path, excel_col in self.column_mapping.items():
             value = self._get_nested_value(json_data, json_path)
@@ -173,6 +178,10 @@ class ApplicantExcelWriter:
         
         for idx, json_data in enumerate(json_data_list):
             current_row = start_row + idx
+            
+            # Auto-generate applicant_number if not provided
+            if not json_data.get('applicant_number'):
+                json_data['applicant_number'] = str(current_row - 1)
             
             for json_path, excel_col in self.column_mapping.items():
                 value = self._get_nested_value(json_data, json_path)

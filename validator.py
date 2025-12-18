@@ -27,14 +27,16 @@ class ApplicantDataValidator:
         self.errors = []
         self.warnings = []
         
-        # Check required fields
+        # Check required fields (only 4 mandatory fields)
         self._validate_required_fields(data)
         
-        # Validate basic info
-        self._validate_basic_info(data)
+        # Validate basic info (optional but if present, must be valid)
+        if data.get('basic_info'):
+            self._validate_basic_info(data)
         
-        # Validate work experience
-        self._validate_work_experience(data)
+        # Validate work experience (optional but if present, must be valid)
+        if data.get('work_experience'):
+            self._validate_work_experience(data)
         
         # Validate dates
         self._validate_dates(data)
@@ -48,14 +50,12 @@ class ApplicantDataValidator:
     
     def _validate_required_fields(self, data: Dict[str, Any]):
         """Check that all required fields are present"""
+        # Only these 4 fields are mandatory
         required_fields = [
-            'applicant_number',
             'applicant_name',
             'application_date',
-            'basic_info.birth_year',
-            'basic_info.gender',
-            'basic_info.final_education_school',
-            'basic_info.final_education_degree'
+            'affiliation',
+            'application_field'
         ]
         
         for field_path in required_fields:

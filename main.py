@@ -99,10 +99,10 @@ if __name__ == "__main__":
     writer = ApplicantExcelWriter("applicants.xlsx")
     
     single_resume = {
-        "applicant_number": "2024-HR-0001",
+        # applicant_number will be auto-generated sequentially (1, 2, 3, ...)
         "applicant_name": "홍길동",
         "application_date": "2024-12-19",
-        "affiliation": "",
+        "affiliation": "서울대학교",
         "application_field": "소프트웨어 개발",
         "basic_info": {
             "birth_year": "1990",
