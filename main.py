@@ -48,6 +48,22 @@ def process_single_json_file(json_file_path: str, excel_path: str = "applicants.
         with open(json_file_path, 'r', encoding='utf-8') as f:
             json_data = json.load(f)
         
+        # Check if data is a list (array of applicants)
+        if isinstance(json_data, list):
+            print(f"⚠ JSON 파일에 {len(json_data)}개의 지원자가 배열로 있습니다.")
+            print(f"첫 번째 지원자만 처리합니다. 모든 지원자를 처리하려면 batch_process를 사용하세요.")
+            if len(json_data) > 0:
+                json_data = json_data[0]
+            else:
+                print("✗ 빈 배열입니다.")
+                return False
+        
+        # Check if data is a dict
+        if not isinstance(json_data, dict):
+            print(f"✗ JSON 데이터가 올바른 형식이 아닙니다 (타입: {type(json_data).__name__})")
+            print(f"딕셔너리 형식이어야 합니다: {{'applicant_name': '...', ...}}")
+            return False
+        
         return process_single_json_dict(json_data, excel_path, strict_mode)
         
     except FileNotFoundError:
@@ -59,6 +75,8 @@ def process_single_json_file(json_file_path: str, excel_path: str = "applicants.
         return False
     except Exception as e:
         print(f"✗ 예상치 못한 오류: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 

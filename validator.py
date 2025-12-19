@@ -196,6 +196,13 @@ class ApplicantDataValidator:
     
     def print_validation_report(self, data: Dict[str, Any]):
         """Print a detailed validation report"""
+        # Handle case where data might not be a dict
+        if not isinstance(data, dict):
+            print(f"\n{'='*70}")
+            print(f"검증 오류: 데이터가 딕셔너리가 아닙니다 (타입: {type(data).__name__})")
+            print(f"{'='*70}\n")
+            return False
+        
         is_valid, errors, warnings = self.validate(data)
         
         applicant_name = data.get('applicant_name', 'Unknown')
