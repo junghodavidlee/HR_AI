@@ -28,9 +28,224 @@ def process_single_json_dict(json_data: dict, excel_path: str = "applicants.xlsx
     return process_applicant_resume(json_data, writer, strict_mode)
 
 
+def process_json_array_from_data(json_data: list, excel_path: str = "applicants.xlsx", strict_mode: bool = False, source_file: str = ""):
+    """
+    Process an array of applicants from a Python list
+    
+    Args:
+        json_data: List containing applicant dictionaries
+        excel_path: Path to Excel file
+        strict_mode: If True, reject data with validation errors
+        source_file: Optional source file name for reporting
+        
+    Returns:
+        Dictionary with results summary
+    """
+    if len(json_data) == 0:
+        print(f"✗ 빈 배열입니다.")
+        return None
+    
+    # Initialize writer
+    writer = ApplicantExcelWriter(excel_path)
+    
+    # Create template if needed
+    if not os.path.exists(excel_path):
+        print(f"Excel 파일을 새로 생성합니다: {excel_path}")
+        writer.create_template()
+    else:
+        print(f"기존 Excel 파일에 추가합니다: {excel_path}")
+    
+    # Process each applicant
+    results = {
+        'success': [],
+        'failed': [],
+        'warnings': []
+    }
+    
+    for i, applicant_data in enumerate(json_data, 1):
+        print(f"\n{'='*70}")
+        print(f"지원자 {i}/{len(json_data)} 처리 중")
+        print(f"{'='*70}")
+        
+        # Check if it's a dict
+        if not isinstance(applicant_data, dict):
+            print(f"✗ 지원자 {i}: 딕셔너리가 아닙니다 (타입: {type(applicant_data).__name__})")
+            results['failed'].append(f"지원자 {i}")
+            continue
+        
+        # Get applicant name for reporting
+        applicant_name = applicant_data.get('applicant_name', f'지원자 {i}')
+        
+        try:
+            # Process (clean, validate, write)
+            if process_applicant_resume(applicant_data, writer, strict_mode):
+                results['success'].append(applicant_name)
+                
+                # Check for warnings
+                validator = ApplicantDataValidator()
+                is_valid, errors, warnings = validator.validate(
+                    DataCleaner.clean(applicant_data)
+                )
+                if warnings:
+                    results['warnings'].append((applicant_name, warnings))
+            else:
+                results['failed'].append(applicant_name)
+                
+        except Exception as e:
+            print(f"✗ 지원자 {i} ({applicant_name}) 처리 중 오류: {e}")
+            results['failed'].append(applicant_name)
+    
+    # Print summary
+    print(f"\n{'='*70}")
+    print("처리 요약")
+    print(f"{'='*70}")
+    print(f"전체: {len(json_data)}개")
+    print(f"✓ 성공: {len(results['success'])}개")
+    print(f"✗ 실패: {len(results['failed'])}개")
+    print(f"⚠ 경고 있음: {len(results['warnings'])}개")
+    
+    if results['success']:
+        print(f"\n성공한 지원자:")
+        for name in results['success']:
+            print(f"  ✓ {name}")
+    
+    if results['failed']:
+        print(f"\n실패한 지원자:")
+        for name in results['failed']:
+            print(f"  ✗ {name}")
+    
+    if results['warnings']:
+        print(f"\n경고가 있는 지원자:")
+        for name, warnings in results['warnings']:
+            print(f"  ⚠ {name}: {len(warnings)}개 경고")
+    
+    print(f"\nExcel 파일 위치: {os.path.abspath(excel_path)}")
+    print(f"{'='*70}\n")
+    
+    return results
+
+
+def process_json_array_file(json_file_path: str, excel_path: str = "applicants.xlsx", strict_mode: bool = False):
+    """
+    Process a JSON file containing an array of applicants
+    
+    Args:
+        json_file_path: Path to JSON file containing array of applicants
+        excel_path: Path to Excel file
+        strict_mode: If True, reject data with validation errors
+        
+    Returns:
+        Dictionary with results summary
+    """
+    print(f"\n{'='*70}")
+    print(f"처리 중: {json_file_path}")
+    print(f"{'='*70}")
+    
+    try:
+        with open(json_file_path, 'r', encoding='utf-8') as f:
+            json_data = json.load(f)
+        
+        # Check if data is an array
+        if not isinstance(json_data, list):
+            print(f"✗ JSON 파일이 배열이 아닙니다. 단일 지원자는 process_single_json_file()을 사용하세요.")
+            return None
+        
+        if len(json_data) == 0:
+            print(f"✗ 빈 배열입니다.")
+            return None
+        
+        print(f"📋 {len(json_data)}개의 지원자 데이터를 발견했습니다.")
+        
+        # Initialize writer
+        writer = ApplicantExcelWriter(excel_path)
+        
+        # Create template if needed
+        if not os.path.exists(excel_path):
+            print(f"Excel 파일을 새로 생성합니다: {excel_path}")
+            writer.create_template()
+        
+        # Process each applicant
+        results = {
+            'success': [],
+            'failed': [],
+            'warnings': []
+        }
+        
+        for i, applicant_data in enumerate(json_data, 1):
+            print(f"\n{'='*70}")
+            print(f"지원자 {i}/{len(json_data)} 처리 중")
+            print(f"{'='*70}")
+            
+            # Check if it's a dict
+            if not isinstance(applicant_data, dict):
+                print(f"✗ 지원자 {i}: 딕셔너리가 아닙니다 (타입: {type(applicant_data).__name__})")
+                results['failed'].append(f"지원자 {i}")
+                continue
+            
+            # Get applicant name for reporting
+            applicant_name = applicant_data.get('applicant_name', f'지원자 {i}')
+            
+            try:
+                # Process (clean, validate, write)
+                if process_applicant_resume(applicant_data, writer, strict_mode):
+                    results['success'].append(applicant_name)
+                    
+                    # Check for warnings
+                    validator = ApplicantDataValidator()
+                    is_valid, errors, warnings = validator.validate(
+                        DataCleaner.clean(applicant_data)
+                    )
+                    if warnings:
+                        results['warnings'].append((applicant_name, warnings))
+                else:
+                    results['failed'].append(applicant_name)
+                    
+            except Exception as e:
+                print(f"✗ 지원자 {i} ({applicant_name}) 처리 중 오류: {e}")
+                results['failed'].append(applicant_name)
+        
+        # Print summary
+        print(f"\n{'='*70}")
+        print("처리 요약")
+        print(f"{'='*70}")
+        print(f"전체: {len(json_data)}개")
+        print(f"✓ 성공: {len(results['success'])}개")
+        print(f"✗ 실패: {len(results['failed'])}개")
+        print(f"⚠ 경고 있음: {len(results['warnings'])}개")
+        
+        if results['failed']:
+            print(f"\n실패한 지원자:")
+            for name in results['failed']:
+                print(f"  - {name}")
+        
+        if results['warnings']:
+            print(f"\n경고가 있는 지원자:")
+            for name, warnings in results['warnings']:
+                print(f"  - {name}: {len(warnings)}개 경고")
+        
+        print(f"\nExcel 파일 위치: {os.path.abspath(excel_path)}")
+        print(f"{'='*70}\n")
+        
+        return results
+        
+    except FileNotFoundError:
+        print(f"✗ 파일을 찾을 수 없음: {json_file_path}")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"✗ JSON 파싱 오류: {json_file_path}")
+        print(f"  상세: {e}")
+        return None
+    except Exception as e:
+        print(f"✗ 예상치 못한 오류: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+
+
 def process_single_json_file(json_file_path: str, excel_path: str = "applicants.xlsx", strict_mode: bool = False):
     """
     Process a single applicant from a JSON file
+    Automatically detects and processes arrays of applicants
     
     Args:
         json_file_path: Path to JSON file
@@ -38,7 +253,7 @@ def process_single_json_file(json_file_path: str, excel_path: str = "applicants.
         strict_mode: If True, reject data with validation errors
         
     Returns:
-        True if successful
+        True if successful (for single applicant), or results dict (for array)
     """
     print(f"\n{'='*70}")
     print(f"처리 중: {json_file_path}")
@@ -50,13 +265,11 @@ def process_single_json_file(json_file_path: str, excel_path: str = "applicants.
         
         # Check if data is a list (array of applicants)
         if isinstance(json_data, list):
-            print(f"⚠ JSON 파일에 {len(json_data)}개의 지원자가 배열로 있습니다.")
-            print(f"첫 번째 지원자만 처리합니다. 모든 지원자를 처리하려면 batch_process를 사용하세요.")
-            if len(json_data) > 0:
-                json_data = json_data[0]
-            else:
-                print("✗ 빈 배열입니다.")
-                return False
+            print(f"📋 JSON 파일에 {len(json_data)}개의 지원자가 배열로 있습니다.")
+            print(f"모든 지원자를 처리합니다...\n")
+            
+            # Redirect to array processing function
+            return process_json_array_from_data(json_data, excel_path, strict_mode, source_file=json_file_path)
         
         # Check if data is a dict
         if not isinstance(json_data, dict):
