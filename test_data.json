@@ -1,0 +1,192 @@
+[
+  {
+    "applicant_name": "이민준",
+    "application_date": "2024-12-19",
+    "affiliation": "신한은행 프라이빗뱅킹센터",
+    "application_field": "영업점 PB",
+    "basic_info": {
+      "birth_year": "1988",
+      "gender": "남",
+      "final_education_school": "고려대학교 경영대학원",
+      "final_education_degree": "석사"
+    },
+    "work_experience": [
+      {
+        "start_date": "2019-06",
+        "end_date": "2024-11",
+        "company_name": "신한은행 프라이빗뱅킹센터",
+        "final_department": "PB팀",
+        "final_position": "과장",
+        "salary": null
+      },
+      {
+        "start_date": "2016-01",
+        "end_date": "2019-05",
+        "company_name": "KB국민은행 강남WM센터",
+        "final_department": "WM팀",
+        "final_position": "대리",
+        "salary": null
+      },
+      {
+        "start_date": "2011-07",
+        "end_date": "2015-12",
+        "company_name": "하나은행 여의도지점",
+        "final_department": "개인영업부",
+        "final_position": "행원",
+        "salary": null
+      }
+    ]
+  },
+  {
+    "applicant_name": "박서연",
+    "application_date": "2024-12-19",
+    "affiliation": "미래에셋증권 재무팀",
+    "application_field": "재무관리부",
+    "basic_info": {
+      "birth_year": "1990",
+      "gender": "여",
+      "final_education_school": "서강대학교",
+      "final_education_degree": "학사"
+    },
+    "work_experience": [
+      {
+        "start_date": "2020-03",
+        "end_date": "2024-11",
+        "company_name": "미래에셋증권",
+        "final_department": "재무팀",
+        "final_position": "과장",
+        "salary": null
+      },
+      {
+        "start_date": "2017-01",
+        "end_date": "2020-02",
+        "company_name": "NH투자증권",
+        "final_department": "회계팀",
+        "final_position": "대리",
+        "salary": null
+      },
+      {
+        "start_date": "2013-07",
+        "end_date": "2016-12",
+        "company_name": "삼정KPMG 회계법인",
+        "final_department": "감사부문",
+        "final_position": "Associate",
+        "salary": null
+      }
+    ]
+  },
+  {
+    "applicant_name": "김태현",
+    "application_date": "2024-12-19",
+    "affiliation": "한화투자증권 ESG전략팀",
+    "application_field": "ESG기업문화부",
+    "basic_info": {
+      "birth_year": "1989",
+      "gender": "남",
+      "final_education_school": "서울대학교 환경대학원",
+      "final_education_degree": "석사"
+    },
+    "work_experience": [
+      {
+        "start_date": "2021-03",
+        "end_date": "2024-11",
+        "company_name": "한화투자증권",
+        "final_department": "ESG전략팀",
+        "final_position": "과장",
+        "salary": null
+      },
+      {
+        "start_date": "2018-01",
+        "end_date": "2021-02",
+        "company_name": "삼성증권",
+        "final_department": "경영기획부 (ESG TF)",
+        "final_position": "대리",
+        "salary": null
+      },
+      {
+        "start_date": "2012-07",
+        "end_date": "2017-12",
+        "company_name": "한국환경산업기술원 (KEITI)",
+        "final_department": "기후변화대응부",
+        "final_position": "연구원",
+        "salary": null
+      }
+    ]
+  },
+  {
+    "applicant_name": "정우진",
+    "application_date": "2024-12-19",
+    "affiliation": "KB증권 여신심사부",
+    "application_field": "리스크심사1부",
+    "basic_info": {
+      "birth_year": "1987",
+      "gender": "남",
+      "final_education_school": "서울대학교 경영대학원",
+      "final_education_degree": "석사"
+    },
+    "work_experience": [
+      {
+        "start_date": "2020-01",
+        "end_date": "재직중",
+        "company_name": "KB증권",
+        "final_department": "여신심사부",
+        "final_position": "과장",
+        "salary": null
+      },
+      {
+        "start_date": "2018-09",
+        "end_date": "2019-12",
+        "company_name": "신한금융투자",
+        "final_department": "리스크관리부",
+        "final_position": "대리",
+        "salary": null
+      },
+      {
+        "start_date": "2010-07",
+        "end_date": "2016-08",
+        "company_name": "우리은행",
+        "final_department": "기업여신부",
+        "final_position": "대리",
+        "salary": null
+      }
+    ]
+  },
+  {
+    "applicant_name": "최지은",
+    "application_date": "2024-12-19",
+    "affiliation": "하나증권 강남WM센터",
+    "application_field": "영업점 PB",
+    "basic_info": {
+      "birth_year": "1991",
+      "gender": "여",
+      "final_education_school": "이화여자대학교",
+      "final_education_degree": "학사"
+    },
+    "work_experience": [
+      {
+        "start_date": "2019-09",
+        "end_date": "2024-11",
+        "company_name": "하나증권 강남WM센터",
+        "final_department": "PB팀",
+        "final_position": "과장",
+        "salary": null
+      },
+      {
+        "start_date": "2017-03",
+        "end_date": "2019-08",
+        "company_name": "우리은행 VIP센터",
+        "final_department": "PB팀",
+        "final_position": "행원",
+        "salary": null
+      },
+      {
+        "start_date": "2014-07",
+        "end_date": "2017-02",
+        "company_name": "삼성생명 재무설계센터",
+        "final_department": null,
+        "final_position": "FC",
+        "salary": null
+      }
+    ]
+  }
+]
