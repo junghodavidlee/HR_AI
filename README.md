@@ -13,11 +13,19 @@ pip install openpyxl --break-system-packages
 
 ```
 .
-├── applicant_excel_writer.py  # Excel 파일 생성 및 데이터 추가
+├── applicant_excel_writer.py  # Excel 파일 생성 및 데이터 추가 (리팩토링됨)
 ├── validator.py                # 데이터 검증 및 정제
 ├── main.py                     # 실행 스크립트
 └── README.md                   # 이 파일
 ```
+
+## 최근 개선사항
+
+### ApplicantExcelWriter 리팩토링
+- **코드 품질 향상**: 상수 분리, 중복 제거, 메서드 분리
+- **타입 안정성**: 완전한 타입 힌트 추가 (typing 모듈 활용)
+- **가독성 개선**: docstring 추가, 명확한 메서드명
+- **유지보수성**: 단일 책임 원칙 적용, 정적 메서드 활용
 
 ## 사용 방법
 
